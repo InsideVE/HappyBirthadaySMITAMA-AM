@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Smita Ma'am!</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      background: url('https://img.freepik.com/free-vector/chemistry-lab-illustrated-background_52683-68249.jpg') no-repeat center center/cover;
+      position: relative;
+    }
+
+    body::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.6);
+      z-index: 0;
+    }
+
+    .sky {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .balloon {
+      width: 60px;
+      height: 80px;
+      border-radius: 50%;
+      position: absolute;
+      bottom: -100px;
+      animation: float 7s infinite ease-in-out;
+      opacity: 0.8;
+    }
+
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      width: 2px;
+      height: 20px;
+      background: #555;
+      transform: translateX(-50%);
+    }
+
+    .balloon1 { left: 10%; background-color: #ff4081; animation-delay: 0s; }
+    .balloon2 { left: 30%; background-color: #ffeb3b; animation-delay: 2s; }
+    .balloon3 { left: 50%; background-color: #4caf50; animation-delay: 4s; }
+    .balloon4 { left: 70%; background-color: #2196f3; animation-delay: 1s; }
+    .balloon5 { left: 90%; background-color: #9c27b0; animation-delay: 3s; }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      50% { transform: translateY(-400px) rotate(10deg); opacity: 0.8; }
+      100% { transform: translateY(-800px) rotate(-10deg); opacity: 0; }
+    }
+
+    /* Main container */
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #ffff;
+      opacity: 0;
+      z-index: 10;
+      transition: opacity 1.5s ease-in;
+    }
+
+    .show { opacity: 1 !important; }
+
+    .container h1 {
+      font-size: 2.8rem;
+      color: #ffeb3b;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .highlight-name { color: #ec8e00; }
+
+    .container p { font-size: 1.3rem; margin: 0.4rem 0; }
+
+    .slider {
+      width: 250px; height: 250px;
+      border-radius: 50%; border: 6px solid #fff;
+      overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      margin: 0 auto;
+      position: relative;
+    }
+
+    
+.slides {
+  display: flex;
+  width: max-content; /* ya auto */
+  height: 250px;
+*/ animation: slideShow 8s infinite; */
+}
+
+.slides img {
+  flex-shrink: 0;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  object-position: center;
+}
+
+
+    @keyframes slideShow {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(0); }
+      25% { transform: translateX(-250px); }
+      45% { transform: translateX(-250px); }
+      50% { transform: translateX(-500px); }
+      70% { transform: translateX(-500px); }
+      75% { transform: translateX(-750px); }
+      95% { transform: translateX(-750px); }
+      100% { transform: translateX(0); }
+    }
+
+    #fireIntro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="fireIntro"></canvas>
+
+  <div class="sky">
+    <div class="balloon balloon1"></div>
+    <div class="balloon balloon2"></div>
+    <div class="balloon balloon3"></div>
+    <div class="balloon balloon4"></div>
+    <div class="balloon balloon5"></div>
+  </div>
+
+  <div class="container" id="mainContent">
+    <div class="slider">
+      <div class="slides">
+        <img src="img/Smita1.JPEG" alt="Smita Ma'am 1">
+        <img src="img/Smita2.JPEG" alt="Smita Ma'am 2">
+        <img src="img/Smita3.JPEG" alt="Smita Ma'am 3">
+        <img src="img/Smita4.JPEG" alt="Smita Ma'am 4">
+      </div>
+    </div>
+    <h1>🎉 Happy Birthday, <span class="highlight-name">Smita Ma'am!</span> 🎉</h1>
+    <p>Wishing you a day full of joy, laughter, and celebration. 💐</p>
+    <p>From Sangharsh 😊</p>
+    <p>Radhe Radhe 🙏</p>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("fireIntro");
+    const ctx = canvas.getContext("2d");
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+    class Particle {
+      constructor(x, y, color, velocity, life) {
+        this.x = x; this.y = y;
+        this.color = color;
+        this.velocity = velocity;
+        this.life = life;
+        this.opacity = 1;
+      }
+      update() {
+        this.x += this.velocity.x;
+        this.y += this.velocity.y;
+        this.velocity.y += 0.05;
+        this.life--;
+        this.opacity = Math.max(this.life / 60, 0);
+      }
+      draw() {
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    class Rocket {
+      constructor(x, targetY, targetX, color) {
+        this.x = canvas.width / 2;
+        this.y = canvas.height;
+        this.targetY = targetY;
+        this.targetX = targetX;
+        this.color = color;
+        this.exploded = false;
+      }
+      update() {
+        if (!this.exploded) {
+          const dx = this.targetX - this.x;
+          const dy = this.targetY - this.y;
+          this.x += dx * 0.08;
+          this.y += dy * 0.08;
+          if (Math.abs(dy) < 10) this.explode();
+        }
+      }
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      explode() {
+        this.exploded = true;
+        const explosionCount = 70;
+        for (let i = 0; i < explosionCount; i++) {
+          const angle = (Math.PI * 2 * i) / explosionCount;
+          const spreadX = Math.cos(angle) * (Math.random() * 4 + 2);
+          const spreadY = Math.sin(angle) * (Math.random() * 4 + 2);
+          particles.push(new Particle(this.x, this.y, this.color, { x: spreadX, y: spreadY }, 60));
+        }
+
+        // 🚀 Show main content as soon as first explosion happens
+        document.getElementById("mainContent").classList.add("show");
+      }
+    }
+
+    let particles = [];
+    let rockets = [];
+    const colors = ["#ff4081", "#ffeb3b", "#4caf50", "#2196f3", "#9c27b0"];
+    const targetY = canvas.height / 2.2;
+    const spread = 900; // 🔥 doubled width spread
+
+    // Launch 9 rockets forming inverted triangle
+    for (let i = 0; i < 9; i++) {
+      const offset = (i - 4) * (spread / 8);
+      rockets.push(new Rocket(canvas.width / 2, targetY, canvas.width / 2 + offset, colors[i % colors.length]));
+    }
+
+    // After few seconds, launch random fireworks
+    setTimeout(() => {
+      setInterval(() => {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height / 2;
+        rockets.push(new Rocket(x, y, x, colors[Math.floor(Math.random() * colors.length)]));
+      }, 500);
+    }, 1000);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.fillStyle = "rgba(0,0,0,0.25)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      rockets.forEach((r, i) => {
+        r.update();
+        r.draw();
+        if (r.exploded) rockets.splice(i, 1);
+      });
+
+      particles.forEach((p, i) => {
+        p.update();
+        p.draw();
+        if (p.life <= 0) particles.splice(i, 1);
+      });
+    }
+
+    animate();
+  </script>
+</body>
+</html>
