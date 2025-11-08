@@ -6,12 +6,13 @@
   <title>Happy Birthday Smita Ma'am!</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       min-height: 100vh;
       background: url('https://img.freepik.com/free-vector/chemistry-lab-illustrated-background_52683-68249.jpg') no-repeat center center/cover;
       position: relative;
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
     body::after {
@@ -23,6 +24,7 @@
       z-index: 0;
     }
 
+    /* Balloons */
     .sky {
       position: absolute;
       width: 100%;
@@ -32,8 +34,8 @@
     }
 
     .balloon {
-      width: 50px;
-      height: 70px;
+      width: 45px;
+      height: 60px;
       border-radius: 50%;
       position: absolute;
       bottom: -100px;
@@ -60,11 +62,11 @@
 
     @keyframes float {
       0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      50% { transform: translateY(-400px) rotate(10deg); opacity: 0.8; }
-      100% { transform: translateY(-800px) rotate(-10deg); opacity: 0; }
+      50% { transform: translateY(-300px) rotate(10deg); opacity: 0.9; }
+      100% { transform: translateY(-600px) rotate(-10deg); opacity: 0; }
     }
 
-    /* Main container */
+    /* Main Content */
     .container {
       position: relative;
       top: 50%;
@@ -74,15 +76,15 @@
       color: #fff;
       opacity: 0;
       z-index: 10;
-      transition: opacity 1.5s ease-in;
       width: 90%;
-      max-width: 400px;
+      max-width: 350px;
+      transition: opacity 1.5s ease-in;
     }
 
     .show { opacity: 1 !important; }
 
     .container h1 {
-      font-size: clamp(1.5rem, 4vw, 2.8rem);
+      font-size: 2rem;
       color: #ffeb3b;
       margin: 1rem 0 0.5rem;
       line-height: 1.3;
@@ -91,16 +93,19 @@
     .highlight-name { color: #ec8e00; }
 
     .container p {
-      font-size: clamp(1rem, 2.5vw, 1.3rem);
-      margin: 0.4rem 0;
+      font-size: 1rem;
+      margin: 0.3rem 0;
+      color: #333;
+      font-weight: 500;
     }
 
+    /* Slider */
     .slider {
       width: 80vw;
-      max-width: 250px;
+      max-width: 200px;
       aspect-ratio: 1 / 1;
       border-radius: 50%;
-      border: 6px solid #fff;
+      border: 4px solid #fff;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
       margin: 0 auto;
@@ -123,14 +128,10 @@
     }
 
     @keyframes slideShow {
-      0% { transform: translateX(0); }
-      20% { transform: translateX(0); }
-      25% { transform: translateX(-100%); }
-      45% { transform: translateX(-100%); }
-      50% { transform: translateX(-200%); }
-      70% { transform: translateX(-200%); }
-      75% { transform: translateX(-300%); }
-      95% { transform: translateX(-300%); }
+      0%, 20% { transform: translateX(0); }
+      25%, 45% { transform: translateX(-100%); }
+      50%, 70% { transform: translateX(-200%); }
+      75%, 95% { transform: translateX(-300%); }
       100% { transform: translateX(0); }
     }
 
@@ -143,24 +144,24 @@
       pointer-events: none;
     }
 
-    /* Responsive tweaks */
+    /* 📱 Responsive Tweaks */
     @media (max-width: 600px) {
-      .balloon {
-        width: 35px;
-        height: 50px;
-      }
       .container h1 {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
       }
       .container p {
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
       .slider {
-        width: 70vw;
-        border-width: 4px;
+        width: 65vw;
+        max-width: 180px;
+        border-width: 3px;
+      }
+      .balloon {
+        width: 30px;
+        height: 45px;
       }
     }
-
   </style>
 </head>
 <body>
@@ -192,8 +193,13 @@
   <script>
     const canvas = document.getElementById("fireIntro");
     const ctx = canvas.getContext("2d");
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
     class Particle {
       constructor(x, y, color, velocity, life) {
@@ -246,11 +252,11 @@
       }
       explode() {
         this.exploded = true;
-        const explosionCount = 70;
+        const explosionCount = 60;
         for (let i = 0; i < explosionCount; i++) {
           const angle = (Math.PI * 2 * i) / explosionCount;
-          const spreadX = Math.cos(angle) * (Math.random() * 4 + 2);
-          const spreadY = Math.sin(angle) * (Math.random() * 4 + 2);
+          const spreadX = Math.cos(angle) * (Math.random() * 3 + 2);
+          const spreadY = Math.sin(angle) * (Math.random() * 3 + 2);
           particles.push(new Particle(this.x, this.y, this.color, { x: spreadX, y: spreadY }, 60));
         }
 
@@ -262,7 +268,7 @@
     let rockets = [];
     const colors = ["#ff4081", "#ffeb3b", "#4caf50", "#2196f3", "#9c27b0"];
     const targetY = canvas.height / 2.2;
-    const spread = 900;
+    const spread = 800;
 
     for (let i = 0; i < 9; i++) {
       const offset = (i - 4) * (spread / 8);
@@ -274,8 +280,8 @@
         const x = Math.random() * canvas.width;
         const y = Math.random() * canvas.height / 2;
         rockets.push(new Rocket(x, y, x, colors[Math.floor(Math.random() * colors.length)]));
-      }, 500);
-    }, 1000);
+      }, 800);
+    }, 1200);
 
     function animate() {
       requestAnimationFrame(animate);
@@ -296,12 +302,6 @@
     }
 
     animate();
-
-    // Adjust canvas on resize
-    window.addEventListener("resize", () => {
-      canvas.width = innerWidth;
-      canvas.height = innerHeight;
-    });
   </script>
 </body>
 </html>
